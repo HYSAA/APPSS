@@ -1,0 +1,108 @@
+<div id="data-entry">
+    <table id="table-entry">
+        <tr>
+            <th colspan="2"  [ngStyle]="{'text-align': 'center'}">
+                <span>Student Information Data Entry</span>
+            </th>
+        </tr>
+        <tr>
+           <!-- student ID -->
+           <th><label for="id">Student ID</label></th>  
+           <td><input [(ngModel)]="studID" type="text" id="id"></td>
+        </tr>
+        <tr>
+            <!-- student first name -->
+            <th><label for="fname">First Name</label></th>
+            <td><input [(ngModel)]="studFirstName" type="text" id="fname"></td>
+        </tr>
+        <tr>
+            <!-- student middle name -->
+            <th><label for="mname">Middle Name</label></th>
+            <td><input [(ngModel)]="studMidName" type="text" id="mname"></td>
+        </tr>
+        <tr>
+            <!-- student last name -->
+            <th><label for="lname">Last Name</label></th>
+            <td><input [(ngModel)]="studLastName" type="text" id="lname"></td>
+        </tr>
+        <tr>
+            <!-- college selection menu -->
+            <th><label for="college">College</label></th>
+            <td>
+                <select [(ngModel)]="selectedCollege" name="" id="college"  (click)="filterPrograms()">
+                <option [ngValue]="null">----------- Select College -----------</option>
+                <option *ngFor="let college of collegesdb" [ngValue]="college">
+                    {{ college.collfullname }}
+                </option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+
+            <!-- program selection menu -->
+            <th><label for="program">Program</label></th>
+            <td>
+                <select [(ngModel)]="selectedProgram" name="" id="program">
+                    <option [ngValue]="null">---------- Select Program ----------</option>
+                    <option *ngFor="let program of filteredPrograms" [ngValue]="program">
+                        {{ program.progfullname}} 
+                    </option>
+                </select>
+            </td>
+          </tr>
+
+
+
+       
+        <tr>
+            <th><label for="year">Year</label></th>
+            <td><input [(ngModel)]="studYear" type="text" id="year"></td>
+        </tr>
+        <tr>
+            <td colspan="2" [ngStyle]="{'text-align': 'center'}">
+                <button (click)="saveStudentInfo()" class="button btn-primary">
+                    Save
+                </button>
+
+                <button (click)="printStudentEntries()" *ngIf="studentdb.length > 0" class="button btn-info">
+                    Print
+                </button>
+
+                <!-- <button (click)="updateStudentInfo()" class="button btn-primary">
+                    Update
+                </button> -->
+                
+            </td>
+        </tr>
+    </table>
+
+    <table *ngIf="printable" id="table-listing">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>Middle Initial</th>
+                <th>College</th>
+                <th>Program Enrolled</th>
+                <th>Year</th>
+                <th colspan="2">Edit Delete</th>
+            </tr> 
+            </thead>
+            <tbody>
+            <tr *ngFor="let student of studentdb" > 
+                <td>{{ student.studid}}</td>
+                <td>{{ student.studlastname }}</td>
+                <td>{{ student.studfirstname }}</td>
+                <td>{{ student.studmidname}}</td>
+              
+                <td>{{ student.studcollid}}</td>
+                <td>{{ student.studprogid }}</td>
+                <td>{{ student.studyear }}</td>
+                <td> <a href="#" (click)="getStudentInfo(student)">Edit </a></td>
+                <!-- <td> <a href="#" (click)="getStudentInfo(student)" *ngIf="clicked">Update </a></td> -->
+                <td><a href="#" (click)="removeStudent(student)">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>  
+
